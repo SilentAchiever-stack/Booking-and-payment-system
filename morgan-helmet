@@ -1,0 +1,58 @@
+both are small middleware packages you plug into Express.
+
+Morgan is a request logger. Every time someone hits your API, it prints a line in your terminal like POST /api/bookings 201 45ms. It shows you which routes are being called, the status code, and how long each took. That's very handy for debugging while you build. You use it with one line: app.use(morgan('dev')).
+
+Helmet is a security helper. It sets a bunch of HTTP response headers that protect your app from common attacks, such as clickjacking, MIME-type sniffing, and leaking info about your server (it removes the X-Powered-By: Express header). You add it with app.use(helmet()), and the defaults are good enough for most projects.
+
+In short, morgan helps you see what's happening in your app, and helmet helps keep it safer. Neither changes how your booking logic works.
+
+
+
+
+Business
+ └── Availability Rules
+      ├── Weekly Schedule
+      ├── Specific Closed Dates
+      ├── Date Overrides
+      └── Booking Settings
+
+For example:
+weekly_schedule
+
+business_id
+day_of_week
+is_open
+open_time
+close_time
+
+Then:
+closed_dates
+
+business_id
+date
+reason
+
+And potentially:
+availability_overrides
+
+business_id
+date
+is_open
+open_time
+close_time
+
+
+
+
+
+
+
+
+
+| Column | Meaning | Example |
+|---|---|---|
+| `business_id` | Which business this schedule belongs to | `AS001` |
+| `day_of_week` | The day being configured | `Monday` |
+| `is_open` | Whether the business is open that day | `true` |
+| `open_time` | What time it opens | `09:00` |
+| `close_time` | What time it closes | `18:00` |
